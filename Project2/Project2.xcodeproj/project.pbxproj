@@ -8,15 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		2127D0A684EA21803F73DA72 /* Pods_Project2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB85C44E01A7365773D262B6 /* Pods_Project2.framework */; };
+		9E8387D41E3F5E5C00BC5F6B /* DayForescast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8387D31E3F5E5C00BC5F6B /* DayForescast.swift */; };
 		9E8527B51E3684F800F6FE0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E8527B41E3684F800F6FE0B /* AppDelegate.swift */; };
 		9E8527BA1E3684F800F6FE0B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E8527B81E3684F800F6FE0B /* Main.storyboard */; };
 		9E8527BC1E3684F800F6FE0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E8527BB1E3684F800F6FE0B /* Assets.xcassets */; };
 		9E8527BF1E3684F800F6FE0B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9E8527BD1E3684F800F6FE0B /* LaunchScreen.storyboard */; };
 		9ECDF26E1E3A465F00BCEF87 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECDF26D1E3A465F00BCEF87 /* HomeTableViewController.swift */; };
 		9ECDF2701E3A467700BCEF87 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECDF26F1E3A467700BCEF87 /* SettingsTableViewController.swift */; };
+		9ECDF2791E3A874E00BCEF87 /* Zeplin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECDF2781E3A874E00BCEF87 /* Zeplin.swift */; };
+		9ECDF27D1E3BBBEA00BCEF87 /* WeekDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ECDF27C1E3BBBEA00BCEF87 /* WeekDayTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9E8387D31E3F5E5C00BC5F6B /* DayForescast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DayForescast.swift; path = ../DayForescast.swift; sourceTree = "<group>"; };
 		9E8527B11E3684F800F6FE0B /* Project2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Project2.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E8527B41E3684F800F6FE0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9E8527B91E3684F800F6FE0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -25,6 +29,8 @@
 		9E8527C01E3684F800F6FE0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9ECDF26D1E3A465F00BCEF87 /* HomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		9ECDF26F1E3A467700BCEF87 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		9ECDF2781E3A874E00BCEF87 /* Zeplin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Zeplin.swift; sourceTree = "<group>"; };
+		9ECDF27C1E3BBBEA00BCEF87 /* WeekDayTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekDayTableViewCell.swift; sourceTree = "<group>"; };
 		A0BD376CF00FBF7D08E7B60F /* Pods-Project2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project2.release.xcconfig"; path = "Pods/Target Support Files/Pods-Project2/Pods-Project2.release.xcconfig"; sourceTree = "<group>"; };
 		BB0A52321D9D12C3D0A6E435 /* Pods-Project2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Project2.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Project2/Pods-Project2.debug.xcconfig"; sourceTree = "<group>"; };
 		CB85C44E01A7365773D262B6 /* Pods_Project2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Project2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,10 +78,13 @@
 		9E8527B31E3684F800F6FE0B /* Project2 */ = {
 			isa = PBXGroup;
 			children = (
+				9ECDF2771E3A873600BCEF87 /* Helpers */,
 				9E8527C61E36855700F6FE0B /* Support Files */,
 				9E8527B81E3684F800F6FE0B /* Main.storyboard */,
+				9ECDF27C1E3BBBEA00BCEF87 /* WeekDayTableViewCell.swift */,
 				9ECDF26F1E3A467700BCEF87 /* SettingsTableViewController.swift */,
 				9ECDF26D1E3A465F00BCEF87 /* HomeTableViewController.swift */,
+				9E8387D31E3F5E5C00BC5F6B /* DayForescast.swift */,
 			);
 			path = Project2;
 			sourceTree = "<group>";
@@ -89,6 +98,14 @@
 				9E8527C01E3684F800F6FE0B /* Info.plist */,
 			);
 			name = "Support Files";
+			sourceTree = "<group>";
+		};
+		9ECDF2771E3A873600BCEF87 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				9ECDF2781E3A874E00BCEF87 /* Zeplin.swift */,
+			);
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		EEA46938DE0F338796F01247 /* Frameworks */ = {
@@ -224,6 +241,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ECDF26E1E3A465F00BCEF87 /* HomeTableViewController.swift in Sources */,
+				9ECDF2791E3A874E00BCEF87 /* Zeplin.swift in Sources */,
+				9ECDF27D1E3BBBEA00BCEF87 /* WeekDayTableViewCell.swift in Sources */,
+				9E8387D41E3F5E5C00BC5F6B /* DayForescast.swift in Sources */,
 				9E8527B51E3684F800F6FE0B /* AppDelegate.swift in Sources */,
 				9ECDF2701E3A467700BCEF87 /* SettingsTableViewController.swift in Sources */,
 			);
