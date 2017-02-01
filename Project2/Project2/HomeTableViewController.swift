@@ -16,16 +16,22 @@ class HomeTableViewController: UIViewController, UITableViewDataSource, UITableV
     var gradientLayer: CAGradientLayer?
     var titleT: UILabel!
     var subtitleT: UILabel!
-    var titleText = "Sunshine"
-    var subtitleText = "Montevideo, Uruguay"
+    var titleViewWeather = ""
     let actualDayViewCell = "todayViewCell"
     let weekViewCell = "weekViewCell"
     
-    let appi = "http://api.openweathermap.org/data/2.5/forecast/daily"
+    let userDefaults = UserDefaults.standard
+    var locationSelected = false
+    
+    let appi = "http://api.openweathermap.org/data/2.5/forecast/daily?"
     let key = "9b266f76f2e50ffa3c2f481451954376"
-    let country = "Montevideo"
-    let units = "metric"
+    var country = "Montevideo"
+    var units = "metric"
     let cantDays = "16"
+    
+    var latitude = "32.5228"
+    var longitude = "-122.4064"
+    
     var allTheDays = [DayForecast]() {
         didSet {
             self.tableView.reloadData()
@@ -39,8 +45,6 @@ class HomeTableViewController: UIViewController, UITableViewDataSource, UITableV
     // MARK: - Load View
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.titleView = setTitle(title: titleText, subtitle: subtitleText)
-        getAPIData()
     }
     
     // MARK: - View will appear
@@ -49,6 +53,9 @@ class HomeTableViewController: UIViewController, UITableViewDataSource, UITableV
         
         setNavigationBarStyles()
         view.backgroundColor = .it2DodgerBlue
+        
+        getAPIData()
+        navigationItem.titleView = setTitle(title: titleViewWeather, subtitle: country)
     }
     
     override func viewDidLayoutSubviews() {
@@ -77,6 +84,7 @@ class HomeTableViewController: UIViewController, UITableViewDataSource, UITableV
         
         if indexPath.row == 0 {
             cell.configureCurrentDay(with: dayInfo)
+            titleViewWeather = dayInfo.generalDefinition
         } else {
             cell.configure(with: dayInfo)
         }
@@ -143,10 +151,19 @@ class HomeTableViewController: UIViewController, UITableViewDataSource, UITableV
         navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
     }
     
-    //MARK: - Get API's data
+    // MARK: - Get API's data
     // http://api.openweathermap.org/data/2.5/forecast/daily?q=Montevideon&APPID=9b266f76f2e50ffa3c2f481451954376&cnt=16&units=metric
     func getAPIData () {
-        let parameters: Parameters = ["APPID" : key, "q": country, "cnt": cantDays, "units" : units]
+        readingUserPreferences()
+        var parameters: Parameters = ["APPID" : key, "cnt": cantDays, "units" : units]
+
+        // If location is ON
+        if locationSelected {
+            parameters["lat"] = latitude
+            parameters["lon"] = longitude
+        } else {
+            parameters["q"] = country
+        }
         Alamofire.request(appi, method: .get, parameters: parameters, encoding: URLEncoding.default, headers: nil).validate().responseJSON { response in
             
             switch response.result {
@@ -178,6 +195,28 @@ class HomeTableViewController: UIViewController, UITableViewDataSource, UITableV
             case .failure(let error):
                 print(error)
             }
+        }
+    }
+    
+    // MARK: - Reading user data preferences
+    func readingUserPreferences() {
+        if let temperatureFormat = userDefaults.string(forKey: "Temperature") {
+            units = temperatureFormat
+        }
+        if let location = userDefaults.string(forKey: "Location") {
+            country = location
+        }
+        
+        locationSelected = userDefaults.bool(forKey: "AutomaticLocation")
+        if userDefaults.bool(forKey: "AutomaticLocation") {
+            if let lat = userDefaults.string(forKey: "Latitude") {
+                latitude = lat
+            }
+            if let lon = userDefaults.string(forKey: "Longitude") {
+                longitude = lon
+            }
+            
+            country = ""
         }
     }
     

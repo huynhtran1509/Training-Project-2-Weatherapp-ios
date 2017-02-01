@@ -43,7 +43,7 @@ class WeekDayTableViewCell: UITableViewCell {
         } else if dayForescast.generalDefinition == "Clear" {
             dayImage.image = UIImage(named: "icClear")
         } else if dayForescast.generalDefinition == "Clouds" {
-            dayImage.image = UIImage(named: "icClouds")
+            dayImage.image = UIImage(named: "icCloudy")
         } else if dayForescast.generalDefinition == "Storm" {
             dayImage.image = UIImage(named: "icStorm")
         } else {
@@ -70,7 +70,7 @@ class WeekDayTableViewCell: UITableViewCell {
     // MARK: Update UI both type of cells
     func configuration (with dayForescast: DayForecast) {
         weatherLabel?.text = dayForescast.generalDefinition
-        actualTempLabel?.text = "\(dayForescast.actualTemp.description)°C"
+        actualTempLabel?.text = "\(dayForescast.actualTemp.description)°"
         dayTempLabel?.text = "\(dayForescast.min.description)° / \(dayForescast.max.description)°"
         dayLabel?.text = dateFormatter.string(from: dayForescast.day)
     }

@@ -7,20 +7,93 @@
 //
 
 import UIKit
+import CoreLocation
 
-class SettingsTableViewController: UIViewController {
+class SettingsTableViewController: UITableViewController, CLLocationManagerDelegate {
 
+    // MARK: - Variables
+    var temp: String?
+    var userDefaults = UserDefaults.standard
+    
+    var latitude: String?
+    var longitude: String?
+    var locationManager: CLLocationManager = CLLocationManager()
+    var startLocation: CLLocation!
+    
     // MARK: - Outlets
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var temperatureControl: UISegmentedControl!
+    @IBOutlet weak var locationSwitch: UISwitch!
+    @IBOutlet weak var locationTextField: UITextField!
+    
+    // MARK: - Actions
+    @IBAction func indexControlChange(_ sender: UISegmentedControl) {
+        switch temperatureControl.selectedSegmentIndex {
+        case 0:
+            temp = "metric"
+            userDefaults.set("metric", forKey: "Temperature")
+        case 1:
+            temp = "imperial"
+            userDefaults.set("imperial", forKey: "Temperature")
+        default:
+            break
+        }
+    }
+
+    @IBAction func locationSwitchChange(_ sender: UISwitch) {
+        locationTextField.isEnabled = !locationSwitch.isOn
+        userDefaults.set(locationSwitch.isOn, forKey: "AutomaticLocation")
+        
+        if locationSwitch.isOn {
+            // Disable the location text field
+            locationManager.startUpdatingLocation()
+        } else {
+            // Enable the location text field
+            locationManager.stopUpdatingLocation()
+        }
+    }
+    
+    @IBAction func locationTextChange(_ sender: Any) {
+        let location = locationTextField.text
+        userDefaults.set(location, forKey: "Location")
+    }
     
     // MARK: - View Load
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Settings"
+        
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        
+        // Get user preferences
+        locationTextField.text = userDefaults.string(forKey: "Location")
+        
+        if let temperatureFormat = userDefaults.string(forKey: "Temperature") {
+            if temperatureFormat == "metric" {
+                temperatureControl.selectedSegmentIndex = 0
+            } else {
+                temperatureControl.selectedSegmentIndex = 1
+            }
+        }
+        
+        if userDefaults.bool(forKey: "AutomaticLocation") {
+            locationSwitch.isOn = true
+            locationTextField.isEnabled = false
+            
+            // Get user location
+            locationManager.startUpdatingLocation()
+        } else {
+            locationSwitch.isOn = false
+        }
+        
+        locationTextField.addTarget(self, action: #selector(locationTextChange(_:)), for: .editingChanged)
     }
     
+    // MARK: - View will appear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         setNavigationBarStyles()
     }
     
@@ -33,19 +106,14 @@ class SettingsTableViewController: UIViewController {
         navigationController?.navigationBar.backgroundColor = UINavigationBar.appearance().backgroundColor
         navigationController!.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.black]
     }
-
-    // MARK: - TableView
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-        return cell
-    }
     
-    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let latestLocation: CLLocation = locations[locations.count - 1]
+        
+        latitude = String(format: "%.4f", latestLocation.coordinate.latitude)
+        userDefaults.set(latitude, forKey: "Latitude")
+        longitude = String(format: "%.4f", latestLocation.coordinate.longitude)
+        userDefaults.set(longitude, forKey: "Longitude")
+    }
     
 }
